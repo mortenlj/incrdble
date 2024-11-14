@@ -35,6 +35,7 @@ class Incrdble:
         return (
             self.deps(platform)
             .with_directory("/app/incrdble", self.source.directory("incrdble"))
+            .with_directory("/app/templates", self.source.directory("templates"))
             .with_new_file("/app/incrdble/__init__.py", f"VERSION = \"1.{version.replace("-", "+")}\"")
             .with_exec(["uv", "sync", "--frozen", "--no-editable"])
         )
