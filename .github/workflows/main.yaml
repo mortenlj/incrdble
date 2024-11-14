@@ -46,18 +46,16 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and push images
-        uses: dagger/dagger-for-github@v6
+        uses: dagger/dagger-for-github@v7
         with:
           version: "latest"
-          verb: call
-          args: publish "--image=${IMAGE}" "--version=${VERSION}"
+          call: publish "--image=${IMAGE}" "--version=${VERSION}"
           cloud-token: "${{ secrets.DAGGER_CLOUD_TOKEN }}"
       - name: Assemble manifests
-        uses: dagger/dagger-for-github@v6
+        uses: dagger/dagger-for-github@v7
         with:
           version: "latest"
-          verb: call
-          args: assemble-manifests "--image=${IMAGE}" "--version=${VERSION}" --output=deploy.yaml
+          call: assemble-manifests "--image=${IMAGE}" "--version=${VERSION}" --output=deploy.yaml
           cloud-token: "${{ secrets.DAGGER_CLOUD_TOKEN }}"
       - name: Save manifests for later deploy
         uses: actions/upload-artifact@v4
