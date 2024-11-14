@@ -1,6 +1,8 @@
 import asyncio
+import functools
 from typing import Annotated
 
+import aiometer
 from jinja2 import Template
 import dagger
 from dagger import dag, function, object_type, DefaultPath, Ignore
@@ -60,15 +62,12 @@ class Incrdble:
             dagger.Platform("linux/amd64"),  # a.k.a. x86_64
             dagger.Platform("linux/arm64"),  # a.k.a. aarch64
         ]
-        cos = []
+        variants = await aiometer.run_all([functools.partial(self.docker, platform, version) for platform in platforms])
         manifest = dag.container()
-        for v in ["latest", version]:
-            variants = []
-            for platform in platforms:
-                variants.append(self.docker(platform, version))
-            cos.append(manifest.publish(f"{image}:{v}", platform_variants=variants))
-
-        return await asyncio.gather(*cos)
+        return await asyncio.gather(
+            manifest.publish(f"{image}:{version}", platform_variants=variants),
+            manifest.publish(f"{image}:latest", platform_variants=variants)
+        )
 
     @function
     async def assemble_manifests(
