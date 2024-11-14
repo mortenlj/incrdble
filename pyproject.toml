@@ -1,0 +1,13 @@
+[project]
+name = "incrdble"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.rst"
+authors = [
+    { name = "Morten Lied Johansen", email = "mortenjo@ifi.uio.no" }
+]
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi>=0.115.5",
+    "uvicorn>=0.32.0",
+]

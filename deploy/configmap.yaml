@@ -1,0 +1,12 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: incrdble
+  namespace: default
+  labels:
+    app: incrdble
+data:
+  bind_address: "0.0.0.0"
+  mode: "Release"
+  root_path: "/"

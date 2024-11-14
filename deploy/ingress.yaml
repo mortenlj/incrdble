@@ -1,0 +1,26 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-production
+  labels:
+    app: incrdble
+  name: incrdble
+  namespace: default
+spec:
+  rules:
+  - host: incrdble.ibidem.no
+    http:
+      paths:
+      - backend:
+          service:
+            name: incrdble
+            port:
+              name: http
+        path: /
+        pathType: Prefix
+  tls:
+  - hosts:
+    - incrdble.ibidem.no
+    secretName: cert-ingress-incrdble-ibidem-no
