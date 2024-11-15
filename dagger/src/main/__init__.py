@@ -50,6 +50,7 @@ class Incrdble:
             .from_("python:3.12-slim")
             .with_workdir("/app")
             .with_directory("/app/.venv", build.directory("/app/.venv"))
+            .with_directory("/app/templates", build.directory("/app/templates"))
             .with_env_variable("PATH", "/app/.venv/bin:${PATH}", expand=True)
             .with_entrypoint(["/app/.venv/bin/python", "-m", "incrdble"])
         )
