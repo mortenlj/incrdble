@@ -9,8 +9,9 @@ metadata:
   name: incrdble
   namespace: default
 spec:
+  ingressClassName: internal
   rules:
-  - host: incrdble.ibidem.no
+  - host: incrdble.internal.ibidem.no
     http:
       paths:
       - backend:
@@ -22,5 +23,5 @@ spec:
         pathType: Prefix
   tls:
   - hosts:
-    - incrdble.ibidem.no
-    secretName: cert-ingress-incrdble-ibidem-no
+    - incrdble.internal.ibidem.no
+    secretName: cert-ingress-incrdble-internal-ibidem-no
