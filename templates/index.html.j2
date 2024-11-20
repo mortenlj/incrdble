@@ -1,0 +1,10 @@
+{% extends 'base.html.j2' %}
+
+{% block content %}
+    <h1 class="mb-3">InCRDble</h1>
+    <ul>
+        {% for crd in crds %}
+            <li><a href="{{ url_for('get_crd', name=crd.metadata.name) }}">{{ crd.metadata.name }}</a></li>
+        {% endfor %}
+    </ul>
+{% endblock %}
