@@ -6,7 +6,8 @@ import sys
 import uvicorn
 from fastapi import FastAPI
 
-from incrdble import probes, api, web, VERSION
+from incrdble import probes, VERSION
+from incrdble.endpoints import web, api
 from incrdble.core.config import settings
 from incrdble.core.logging import get_log_config
 
