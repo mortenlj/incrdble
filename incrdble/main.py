@@ -6,10 +6,9 @@ import sys
 import uvicorn
 from fastapi import FastAPI
 
-from incrdble import probes, VERSION
+from incrdble import probes, VERSION, web
 from incrdble.core.config import settings
 from incrdble.core.logging import get_log_config
-from incrdble.endpoints import web
 
 LOG = logging.getLogger(__name__)
 TITLE = "Incrdble CRD reference viewer"

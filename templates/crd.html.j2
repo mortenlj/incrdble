@@ -1,8 +1,8 @@
 {% extends 'base.html.j2' %}
 
-{% block title %}{{ crd.metadata.name }} - {{ super() }}{% endblock %}
+{% block title %}{{ crd.name() }} - {{ super() }}{% endblock %}
 
 {% block content %}
-    <h1 class="mb-3">{{ crd.metadata.name }}</h1>
+    <h1 class="mb-3">{{ crd.name() }}</h1>
     {{ crd }}
 {% endblock %}
