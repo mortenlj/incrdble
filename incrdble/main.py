@@ -7,9 +7,9 @@ import uvicorn
 from fastapi import FastAPI
 
 from incrdble import probes, VERSION
-from incrdble.endpoints import web, api
 from incrdble.core.config import settings
 from incrdble.core.logging import get_log_config
+from incrdble.endpoints import web
 
 LOG = logging.getLogger(__name__)
 TITLE = "Incrdble CRD reference viewer"
@@ -19,18 +19,13 @@ class ExitOnSignal(Exception):
     pass
 
 
-tags_metadata = []
-tags_metadata.extend(probes.tags_metadata)
-tags_metadata.extend(api.tags_metadata)
-
-
 app = FastAPI(
     title=TITLE,
-    openapi_tags=tags_metadata,
     version=VERSION,
+    openapi_url=None,
+    redoc_url=None,
 )
 app.include_router(probes.router, prefix="/_")
-app.include_router(api.router, prefix="/api")
 app.include_router(web.router)
 
 
