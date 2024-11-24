@@ -4,5 +4,21 @@
 
 {% block content %}
     <h1 class="mb-3">{{ crd.name() }}</h1>
-    {{ crd }}
+    <dl>
+        <dt>Group</dt>
+        <dd>{{ crd.group }}</dd>
+        <dt>Kind</dt>
+        <dd>{{ crd.kind }}</dd>
+        <dt>Plural</dt>
+        <dd>{{ crd.plural }}</dd>
+    </dl>
+    {% for version in crd.versions %}
+        <h2>{{ version.version }}</h2>
+        <p>{{ version.description }}</p>
+        <ul>
+            {% for property in version.properties.root %}
+                <li>{{ property.name }}: {{ property.type }}</li>
+            {% endfor %}
+        </ul>
+    {% endfor %}
 {% endblock %}

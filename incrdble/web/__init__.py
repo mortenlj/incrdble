@@ -15,7 +15,7 @@ templates = Jinja2Templates(directory="templates")
 
 @router.get("/", response_class=HTMLResponse)
 async def index(request: Request, client: AsyncClient = Depends(kubeclient)):
-    crds = [models.Crd.model_validate(crd.spec) async for crd in client.list(CustomResourceDefinition)]
+    crds = [models.BasicCrd.model_validate(crd.spec) async for crd in client.list(CustomResourceDefinition)]
     return templates.TemplateResponse(request=request, name="index.html.j2", context={"crds": crds})
 
 
