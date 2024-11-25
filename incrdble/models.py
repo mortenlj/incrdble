@@ -1,6 +1,6 @@
 from typing import Optional
 
-from pydantic import BaseModel, ConfigDict, Field, AliasPath, field_validator, RootModel, model_validator
+from pydantic import BaseModel, ConfigDict, Field, AliasPath, RootModel, model_validator
 from pydantic.alias_generators import to_camel
 
 
@@ -27,7 +27,6 @@ class Properties(RootModel):
         return properties
 
 
-
 class CrdVersion(BaseModel):
     model_config = ConfigDict(
         alias_generator=to_camel,
@@ -35,8 +34,14 @@ class CrdVersion(BaseModel):
     )
 
     version: str = Field(validation_alias="name")
-    description: Optional[str] = Field(validation_alias=AliasPath("schema", "openAPIV3Schema", "description"), default="")
-    properties: Optional[Properties] = Field(validation_alias=AliasPath("schema", "openAPIV3Schema", "properties"), default_factory=list)
+    description: Optional[str] = Field(
+        validation_alias=AliasPath("schema", "openAPIV3Schema", "description"),
+        default="",
+    )
+    properties: Optional[Properties] = Field(
+        validation_alias=AliasPath("schema", "openAPIV3Schema", "properties"),
+        default_factory=list,
+    )
 
 
 class BasicCrd(BaseModel):
@@ -54,5 +59,8 @@ class BasicCrd(BaseModel):
 
 
 class Crd(BasicCrd):
-    short_names: Optional[list[str]] = Field(validation_alias=AliasPath("names", "shortNames"), default_factory=list)
+    short_names: Optional[list[str]] = Field(
+        validation_alias=AliasPath("names", "shortNames"),
+        default_factory=list,
+    )
     versions: list[CrdVersion]
