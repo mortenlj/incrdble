@@ -54,9 +54,6 @@ class BasicCrd(BaseModel):
     kind: str = Field(validation_alias=AliasPath("names", "kind"))
     plural: str = Field(validation_alias=AliasPath("names", "plural"))
 
-    def name(self):
-        return f"{self.plural}.{self.group}"
-
 
 class Crd(BasicCrd):
     short_names: Optional[list[str]] = Field(

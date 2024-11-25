@@ -16,8 +16,8 @@
         <h2>{{ version.version }}</h2>
         <p>{{ version.description }}</p>
         <ul>
-            {% for property in version.properties.root %}
-                <li>{{ property.name }}: {{ property.type }}</li>
+            {% for property in version.properties %}
+                <li>{{ property.name }}: {{ property.type.name }}</li>
             {% endfor %}
         </ul>
     {% endfor %}
