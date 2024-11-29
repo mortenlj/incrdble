@@ -1,5 +1,15 @@
 {% extends 'base.html.j2' %}
 
+{% macro properties(props, level) -%}
+{% for property in props %}
+    <h{{ level }}>{{ property.name }} {{ property.type }}</h{{ level }}>
+    <p>{{ property.description }}</p>
+    {% if property.properties %}
+        {{ properties(property.properties, level + 1) }}
+    {% endif %}
+{% endfor %}
+{%- endmacro %}
+
 {% block title %}{{ crd.name() }} - {{ super() }}{% endblock %}
 
 {% block content %}
@@ -15,10 +25,6 @@
     {% for version in crd.versions %}
         <h2>{{ version.version }}</h2>
         <p>{{ version.description }}</p>
-        <ul>
-            {% for property in version.properties %}
-                <li>{{ property.name }}: {{ property.type.name }}</li>
-            {% endfor %}
-        </ul>
+        {{ properties(version.properties, 3) }}
     {% endfor %}
 {% endblock %}

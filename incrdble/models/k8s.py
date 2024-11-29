@@ -15,6 +15,9 @@ class Property(BaseModel):
 class Properties(RootModel):
     root: list[Property] = Field(default_factory=list)
 
+    def __iter__(self):
+        return iter(self.root)
+
     @model_validator(mode='before')
     @classmethod
     def validate_root(cls, value):
@@ -53,6 +56,9 @@ class BasicCrd(BaseModel):
     group: str
     kind: str = Field(validation_alias=AliasPath("names", "kind"))
     plural: str = Field(validation_alias=AliasPath("names", "plural"))
+
+    def name(self):
+        return f"{self.plural}.{self.group}"
 
 
 class Crd(BasicCrd):
