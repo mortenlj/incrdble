@@ -1,11 +1,11 @@
 {% extends 'base.html.j2' %}
 
-{% macro properties(props, level) -%}
+{% macro properties(props, level, prefix="") -%}
 {% for property in props %}
-    <h{{ level }}>{{ property.name }} {{ property.type }}</h{{ level }}>
+    <h{{ level }}>{{ prefix }}{{ property.name }} <code>{{ property.type }}</code> {% if property.required %}(required){% endif %}</h{{ level }}>
     <p>{{ property.description }}</p>
     {% if property.properties %}
-        {{ properties(property.properties, level + 1) }}
+        {{ properties(property.properties, level + 1, prefix + property.name + ".") }}
     {% endif %}
 {% endfor %}
 {%- endmacro %}

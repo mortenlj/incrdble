@@ -4,12 +4,30 @@ from pydantic import BaseModel, ConfigDict, Field, AliasPath, RootModel, model_v
 from pydantic.alias_generators import to_camel
 
 
+def validate_required_properties(model):
+    if model.required_properties:
+        for prop in model.properties:
+            prop._required = prop.name in model.required_properties
+    return model
+
+
 class Property(BaseModel):
     name: str
     description: Optional[str] = ""
     type: Optional[str] = ""
     properties: Optional["Properties"] = Field(default_factory=list)
-    required: Optional[list[str]] = Field(default_factory=list)
+    required_properties: Optional[list[str]] = Field(
+        alias="required",
+        default_factory=list,
+    )
+
+    _required: bool = False
+
+    @property
+    def required(self):
+        return self._required
+
+    _validate_required_properties = model_validator(mode="after")(validate_required_properties)
 
 
 class Properties(RootModel):
@@ -45,6 +63,12 @@ class CrdVersion(BaseModel):
         validation_alias=AliasPath("schema", "openAPIV3Schema", "properties"),
         default_factory=list,
     )
+    required_properties: Optional[list[str]] = Field(
+        validation_alias=AliasPath("schema", "openAPIV3Schema", "required"),
+        default_factory=list,
+    )
+
+    _validate_required_properties = model_validator(mode="after")(validate_required_properties)
 
 
 class BasicCrd(BaseModel):
