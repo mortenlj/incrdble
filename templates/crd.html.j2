@@ -32,18 +32,20 @@
         <dd class="col-sm-10">{{ crd.kind }}</dd>
         <dt class="col-sm-2">Plural</dt>
         <dd class="col-sm-10">{{ crd.plural }}</dd>
-        <dt class="col-sm-2">Short names</dt>
-        <dd class="col-sm-10">
-            <ul>
-            {% for short_name in crd.short_names %}
-                <li>{{ short_name }}</li>
-            {% endfor %}
-            </ul>
-        </dd>
+        {% if crd.short_names %}
+            <dt class="col-sm-2">Short names</dt>
+            <dd class="col-sm-10">
+                <ul>
+                {% for short_name in crd.short_names %}
+                    <li>{{ short_name }}</li>
+                {% endfor %}
+                </ul>
+            </dd>
+        {% endif %}
     </dl>
     {% for version in crd.versions %}
         <h3>{{ version.version }}</h3>
-        <p>{{ version.description }}</p>
+        {% if version.description %}<p>{{ version.description }}</p>{% endif %}
         {{ properties(version.properties, 4) }}
     {% endfor %}
 {% endblock %}
