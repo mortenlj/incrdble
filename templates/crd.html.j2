@@ -13,7 +13,7 @@
 {% block title %}{{ crd.name() }} - {{ super() }}{% endblock %}
 
 {% block content %}
-    <h1 class="mb-3">{{ crd.name() }}</h1>
+    <h2 class="mb-3">{{ crd.name() }}</h2>
     <dl class="row">
         <dt class="col-sm-2">Group</dt>
         <dd class="col-sm-10">{{ crd.group }}</dd>
@@ -31,8 +31,8 @@
         </dd>
     </dl>
     {% for version in crd.versions %}
-        <h2>{{ version.version }}</h2>
+        <h3>{{ version.version }}</h3>
         <p>{{ version.description }}</p>
-        {{ properties(version.properties, 3) }}
+        {{ properties(version.properties, 4) }}
     {% endfor %}
 {% endblock %}
