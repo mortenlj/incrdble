@@ -2,10 +2,21 @@
 
 {% macro properties(props, level, prefix="") -%}
 {% for property in props %}
-    <h{{ level }}>{{ prefix }}{{ property.name }} <code>{{ property.type }}</code> {% if property.required %}(required){% endif %}</h{{ level }}>
+    <h{{ level }} id="{{ prefix }}{{ property.name }}">{{ prefix }}{{ property.name }} <code>{{ property.type }}</code> {% if property.required %}(required){% endif %}</h{{ level }}>
     <p>{{ property.description }}</p>
     {% if property.properties %}
         {{ properties(property.properties, level + 1, prefix + property.name + ".") }}
+    {% endif %}
+{% endfor %}
+{%- endmacro %}
+
+{% macro menu(props, prefix="") -%}
+{% for property in props %}
+    <li><a href="#{{ prefix }}{{ property.name }}">{{ prefix }}{{ property.name }}</a></li>
+    {% if property.properties %}
+        <ul>
+            {{ menu(property.properties, prefix + property.name + ".") }}
+        </ul>
     {% endif %}
 {% endfor %}
 {%- endmacro %}
@@ -34,5 +45,12 @@
         <h3>{{ version.version }}</h3>
         <p>{{ version.description }}</p>
         {{ properties(version.properties, 4) }}
+    {% endfor %}
+{% endblock %}
+
+{% block menu %}
+    <h3>Properties</h3>
+    {% for version in crd.versions %}
+        {{ menu(version.properties) }}
     {% endfor %}
 {% endblock %}
