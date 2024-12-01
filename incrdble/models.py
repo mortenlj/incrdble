@@ -3,6 +3,8 @@ from typing import Optional
 from pydantic import BaseModel, ConfigDict, Field, AliasPath, RootModel, model_validator
 from pydantic.alias_generators import to_camel
 
+IGNORED_PROPERTIES = {"metadata", "apiVersion", "kind"}
+
 
 def validate_required_properties(model):
     if model.required_properties:
@@ -34,7 +36,7 @@ class Properties(RootModel):
     root: list[Property] = Field(default_factory=list)
 
     def __iter__(self):
-        return iter(self.root)
+        return (prop for prop in self.root if prop.name not in IGNORED_PROPERTIES)
 
     @model_validator(mode='before')
     @classmethod
