@@ -2,8 +2,6 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  annotations:
-    cert-manager.io/cluster-issuer: letsencrypt-production
   labels:
     app: incrdble
   name: incrdble
@@ -24,4 +22,4 @@ spec:
   tls:
   - hosts:
     - incrdble.internal.ibidem.no
-    secretName: cert-ingress-incrdble-internal-ibidem-no
+    secretName: cert-ingress-wc-internal-ibidem-no
