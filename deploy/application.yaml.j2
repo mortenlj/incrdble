@@ -9,8 +9,10 @@ metadata:
 spec:
   image: "{{ image }}:{{ version }}"
   ports:
-    - kind: http
+    http:
       port: 3000
+      ingress:
+        - zone: internal
   probes:
     liveness:
       http:
