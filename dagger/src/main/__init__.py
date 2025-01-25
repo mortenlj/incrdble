@@ -7,7 +7,7 @@ from jinja2 import Template
 import dagger
 from dagger import dag, function, object_type, DefaultPath, Ignore
 
-DEVELOP_VERSION = "0.1.0-develop"
+DEVELOP_VERSION = "1h"
 
 
 @object_type
