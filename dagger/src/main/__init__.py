@@ -7,7 +7,8 @@ from jinja2 import Template
 import dagger
 from dagger import dag, function, object_type, DefaultPath, Ignore
 
-DEVELOP_VERSION = "1h"
+DEVELOP_VERSION = "0.1.0-develop"
+DEVELOP_IMAGE_VERSION = "1h"
 
 
 @object_type
@@ -66,6 +67,8 @@ class Incrdble:
         ]
         variants = await aiometer.run_all([functools.partial(self.docker, platform, version) for platform in platforms])
         manifest = dag.container()
+        if version == DEVELOP_VERSION:
+            version = DEVELOP_IMAGE_VERSION
         return await asyncio.gather(
             manifest.publish(f"{image}:{version}", platform_variants=variants),
             manifest.publish(f"{image}:latest", platform_variants=variants)
@@ -73,7 +76,7 @@ class Incrdble:
 
     @function
     async def assemble_manifests(
-            self, image: str = "ttl.sh/mortenlj-incrdble", version: str = DEVELOP_VERSION
+            self, image: str = "ttl.sh/mortenlj-incrdble", version: str = DEVELOP_IMAGE_VERSION
     ) -> dagger.File:
         """Assemble manifests"""
         template_dir = self.source.directory("deploy")
