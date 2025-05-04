@@ -17,3 +17,6 @@ description = "Publish the project to ttl.sh"
 [tasks.push]
 run = "git push"
 depends = ["publish"]
+
+[tools]
+python = "3.12"
