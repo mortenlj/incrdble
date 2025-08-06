@@ -19,4 +19,4 @@ run = "git push"
 depends = ["publish"]
 
 [tools]
-python = "3.13.5"
+python = "3.13.6"
